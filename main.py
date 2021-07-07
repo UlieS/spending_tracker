@@ -1,19 +1,38 @@
-from parsing import parse_bank_statements
+import sys
+from argparse import ArgumentParser
+from pathlib import Path
 
-def run_script():
+from streamlit import cli as stcli
 
-    # load the pdfs
-    transactions = parse_bank_statements(path, statement_type)
+from config.config import statement_types
+from database.database_connection import connect_to_db, write_to_db
+from parsing.statement_parsing import parse_bank_statements, verify_categories
 
-    #user input/output -> what are these categories
 
+def run_script(args):
 
-    # store in mongodb
-    # pull old data from mongodb
+    transactions = parse_bank_statements(args.path, statement_types[args.type])
+    transactions = verify_categories(transactions)
 
-    # process into dataframe
-    # visulize graphs
+    engine = connect_to_db()
+    write_to_db(engine, transactions)
+
+    sys.argv = ["streamlit", "run", "visualisation/visualisations.py"]
+    sys.exit(stcli.main())
+
 
 if __name__ == '__main__':
+    parser = ArgumentParser()
 
-    run_script(path)
+    parser.add_argument('--path',
+                        type=Path,
+                        required=True,
+                        help='Path to the file')
+
+    parser.add_argument('--type',
+                        choices=['credit_card', 'ec_card'],
+                        required=True,
+                        help='Bank statement type to be parsed')
+
+    args = parser.parse_args()
+    run_script(args)

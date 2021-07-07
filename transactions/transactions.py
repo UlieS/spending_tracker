@@ -1,25 +1,41 @@
+import datetime
+from typing import List
+
+import pandas as pd
+
+
 class Transaction:
     def __init__(self,
-                 amount,
-                 entry_type,
-                 notes,
-                 date,
-                 currency='EURO',
-                 tags=set(),
-                 category=None):
+                 amount: float,
+                 entry_type: str,
+                 notes: str,
+                 date: datetime.date,
+                 card: str,
+                 currency: str = 'EURO',
+                 tags: List[str] = None,
+                 category: str = ''):
+
         self.amount = amount
         self.entry_type = entry_type
         self.notes = notes
         self.date = date
         self.currency = currency
-        self.tags = tags
+        self.tags = tags or []
         self.category = category
-        
-    def _set_tag(self, tag):
-        self.tags.add(tag)
+        self.card = card
 
-    def _set_category(self, category):
-        self.category = category
+    def add_tag(self, tag):
+        self.tags.append(tag)
 
-    def _update_notes(self, note):
-        self.notes = note
+    def to_dataframe(self) -> pd.DataFrame:
+        return pd.DataFrame({
+            'amount': self.amount,
+            'entry_type': self.entry_type,
+            'date': self.date,
+            'tags': self.tags,
+            'category': self.category,
+            'currency': self.currency,
+            'card': self.card
+        })
+
+

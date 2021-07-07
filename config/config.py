@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-import re
 
 @dataclass
-class _StatementType:
+class StatementType:
     name: str
     year_pattern: str
     amount_pattern: str
@@ -10,8 +9,8 @@ class _StatementType:
     entry_type: dict
 
 
-StatementTypes = {
-    'credit_card': _StatementType(
+statement_types = {
+    'credit_card': StatementType(
         name='CREDIT_CARD',
         year_pattern=r'(Abrechnungsdatum:\s*\d{2}\.\d{2}\.)(202\d)',
         amount_pattern=r'(\d*\.?\d*\,\d{2})([-+]$)',
@@ -19,7 +18,7 @@ StatementTypes = {
         entry_type={'-': 'expense', '+': 'income'}
 
     ),
-    'ec_card': _StatementType(
+    'ec_card': StatementType(
         name='EC_CARD',
         year_pattern=r'(erstellt am\s*\d{2}\.\d{2}\.)(202\d)',
         amount_pattern=r'(\d*\.?\d*\,\d{2})(\s[SH]$)',
@@ -29,14 +28,21 @@ StatementTypes = {
     ),
 }
 
-
-Categories = {
-    'Transportation': r'(Uber|FreeNow|ShareNow|Miles|NextBike|Lime)',
+# regexes for category auto assignment
+categories = {
+    'Transportation':  r'(Uber|Free Now|Share Now|Miles|NextBike|Lime|BVG|Swapfiets|DB Vertrieb GMBH)',
     'Rent': r'Miete',
-    'Healthcare': r'Generali',
-    'FoodDrink': '',
-    'BillsFees': '',
-    'Travel': '',
-    'Entertainment': '',
-    'SportHobbies': ''
+    'Healthcare':  r'Generali',
+    'FoodDrink': '$^',
+    'BillsFees': r'(versicherung|Lidl Connect)',
+    'Travel': '$^',
+    'Entertainment': '$^',
+    'SportHobbies': r'DownDog',
+    'Education': r'(Factory|Medium|Audible)',
+    'Shopping': '$^',
+    'Groceries': r'(Aldi|Lidl|Denns|E Schnelle|Edeka|Rewe|Penny)',
+    'Entertainment': '$^',
+    'Travel': '$^',
+    'Transfer': '$^',
+    'Other': '$^'
 }
