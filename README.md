@@ -8,12 +8,12 @@ It consists of the following pieces:
 * Storing and retrieving data in postgres
 * Interactive visualization using [Altair](https://altair-viz.github.io/) and [Streamlit](https://streamlit.io/)
 
-####Bank Statement Parsing
+#### Bank Statement Parsing
 * Simple regex parsing for known bank statement layouts to extract line items
 * See `parsing.statement_parsing.py` and `config.config.py` for details 
 
 
-####Data Storage
+#### Data Storage
 * Postgres database is run as docker image and data stored locally
 
 #### User Input
