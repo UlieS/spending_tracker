@@ -23,10 +23,7 @@ def create_graphs(_data, graph_type):
             alt.Color('month:N', title='Month', sort=['November', 'December', 'January']),
             tooltip=['day', 'cu_Amount', 'month', 'amount']
         )
-
     elif graph_type == 'monthly_spending':
-        _data['Category'] = _data.category.map(lambda v: list(set(i.split('/')[0].strip() for i in v)))
-
         return alt.Chart(
             _data,
             width=1200,
@@ -101,8 +98,13 @@ if selected_cards:
 if included_tags:
     df = df[df.tag.isin(included_tags)]
 
+
 c = create_graphs(df, 'cu_spending')
 st.altair_chart(c)
 
 c = create_graphs(df, 'monthly_spending')
 st.altair_chart(c)
+
+
+
+

@@ -8,7 +8,7 @@ from sqlalchemy.engine import Engine
 from config.config import StatementType
 from database.table_definition import tags_table, transactions_table
 
-DB_INI_LOCATION = '/Users/ulieschnaithmann/repos/budgeting/config/database.ini'
+DB_INI_LOCATION = '/Users/ulieschnaithmann/repos/budgeting/src/config/database.ini'
 
 
 def connect_to_db(section: str = 'postgresql') -> Engine:

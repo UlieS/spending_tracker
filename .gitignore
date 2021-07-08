@@ -1,5 +1,5 @@
 venv
 *.ipynb
 bgt
-config/database.ini
-!**/__pycache__/
+src/config/database.ini
+**/__pycache__/

@@ -23,4 +23,20 @@ It consists of the following pieces:
 #### Visualisation
 * Data gets displayed and visualized in customizable graphs
 * Assigning categories and tags as tedious as possible allows for fine-grained analysis 
+* Graphs and streamlit interactions can be customized in `visualisation.visualisations.py`
+
+![Example visuals](src/examples/out.gif)
+
+#### How to run
+* Make sure postgres is up and running in the correct local port
+* Navigate to the `src` folder
+* For visualizing existing data run:
+``` 
+python main.py --visualize 
+```
+* For adding new data from an incoming bank_statement run:
+
+```
+python main.py --path [Path] --type [credit_card|ec_card] 
+```
 
