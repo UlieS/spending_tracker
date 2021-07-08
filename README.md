@@ -20,10 +20,10 @@ It consists of the following pieces:
 * Categories are auto-assigned, based on common vendors/transaction descriptions
 * User is prompted to input category and tags for unidentified categories
 
-#### Visualisation
+#### Visualization
 * Data gets displayed and visualized in customizable graphs
 * Assigning categories and tags as tedious as possible allows for fine-grained analysis 
-* Graphs and streamlit interactions can be customized in `visualisation.visualisations.py`
+* Graphs and streamlit interactions can be customized in `visualization.visualizations.py`
 
 ![Example visuals](src/examples/out.gif)
 
