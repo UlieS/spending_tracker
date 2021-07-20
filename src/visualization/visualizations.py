@@ -38,7 +38,7 @@ def create_graphs(_data, graph_type):
 
 
 def prep_data(transactions_df, tags_df):
-    _df = pd.merge(transactions_df, tags_df, right_on=['t_id'], left_on=['transaction_id'])
+    _df = pd.merge(transactions_df, tags_df, right_on=['t_id'], left_on=['transaction_id'], how='right')
     _df = _df[_df.type == 'expense']
     _df['date'] = pd.to_datetime(_df['date'])
     _data = _df.sort_values('date')

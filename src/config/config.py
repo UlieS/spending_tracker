@@ -30,19 +30,17 @@ statement_types = {
 
 # regexes for category auto assignment
 categories = {
-    'Transportation':  r'(Uber|Free Now|Share Now|Miles|NextBike|Lime|BVG|Swapfiets|DB Vertrieb GMBH)',
+    'Transportation':  r'(Uber|Free Now|ShareNow|Miles|NextBike|Lime|BVG|Swapfiets|DB Vertrieb GMBH)',
     'Rent': r'Miete',
-    'Healthcare':  r'Generali',
-    'FoodDrink': '$^',
+    'Healthcare':  r'(Generali|Apotheke)',
+    'FoodDrink': r'(SumUp|Restaurant)',
     'BillsFees': r'(versicherung|Lidl Connect)',
     'Travel': '$^',
     'Entertainment': '$^',
     'SportHobbies': r'DownDog',
-    'Education': r'(Factory|Medium|Audible)',
-    'Shopping': '$^',
-    'Groceries': r'(Aldi|Lidl|Denns|E Schnelle|Edeka|Rewe|Penny)',
-    'Entertainment': '$^',
-    'Travel': '$^',
+    'Education': r'(Factory|Medium|Audible|NYTIMES)',
+    'Shopping': r'(Rossmann|DM-Drogerie|AMZN)',
+    'Groceries': r'(Aldi|Lidl|denn s|E Schnelle|Edeka|Rewe|Penny|E REICHELT|EDEKA)',
     'Transfer': '$^',
     'Other': '$^'
 }

@@ -35,14 +35,14 @@ def parse_bank_statements(path: str, statement_type: StatementType) -> List[Tran
                     if matched_amount:
                         amount = matched_amount.group(1)
                         entry_type = statement_type.entry_type[matched_amount.group(2).strip(' ')]
-                        notes = re.sub(r'\s+', ' ', line).split(' ')[2:-1]
+                        description = re.sub(r'\s+', ' ', line).split(' ')[2:-1]
 
                         idx = line_idx + 1
                         while idx < len(lines) and not amount_pat.search(lines[idx]):
-                            notes.extend(re.sub(r'\s+', ' ', lines[idx]).split(' '))
+                            description.extend(re.sub(r'\s+', ' ', lines[idx]).split(' '))
                             idx += 1
 
-                        notes = ' '.join(notes)
+                        description = ' '.join(description)
                         date = dtdate(int(year), int(date.split('.')[1]), int(date.split('.')[0]))
                         replacements = [
                             ('\.', ''),
@@ -51,11 +51,11 @@ def parse_bank_statements(path: str, statement_type: StatementType) -> List[Tran
                         for old, new in replacements:
                             amount = re.sub(old, new, amount)
 
-                        category = _assign_category(notes)
+                        category = _assign_category(description)
                         transactions.append(Transaction(
                             amount=float(amount),
                             entry_type=entry_type,
-                            notes=notes,
+                            description=description,
                             date=date,
                             card=statement_type.name,
                             category=category)
@@ -71,7 +71,7 @@ def _assign_category(notes: str) -> Union[str, None]:
         pattern = re.compile(pattern, flags=re.IGNORECASE)
         if pattern.search(notes):
             return category
-    return ''
+    return 'Other'
 
 
 def verify_categories(transactions: List[Transaction]) -> List[Transaction]:
@@ -81,12 +81,12 @@ def verify_categories(transactions: List[Transaction]) -> List[Transaction]:
     category_choice = '\n'.join([f'{cat}: {str(idx)}' for idx, cat in cat_mapping.items()])
 
     for transaction in transactions:
-        if not transaction.category:
+        if transaction.category == 'Other':
             category_num = input(
                 f'Enter category for the following transaction: \n'
                 f'----------------------------------------------- \n'
                 f'{transaction.entry_type}, {transaction.date}, {transaction.amount} {transaction.currency} \n'
-                f'{transaction.notes}, \n'
+                f'{transaction.description}, \n'
                 f'----------------------------------------------- \n'
                 f'Choose one of the following:\n'
                 f'{category_choice}\n'
@@ -99,7 +99,7 @@ def verify_categories(transactions: List[Transaction]) -> List[Transaction]:
 
         else:
             print(f'{transaction.entry_type}, {transaction.date}, {transaction.amount} {transaction.currency} \n'
-                  f'{transaction.notes}, \n')
+                  f'{transaction.description}, \n')
 
         # potentially add tags
         tag = input('Do you want to add tags? \n Type (space separated) tags \n')

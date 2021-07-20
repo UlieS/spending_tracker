@@ -8,7 +8,7 @@ class Transaction:
     def __init__(self,
                  amount: float,
                  entry_type: str,
-                 notes: str,
+                 description: str,
                  date: datetime.date,
                  card: str,
                  currency: str = 'EURO',
@@ -17,7 +17,7 @@ class Transaction:
 
         self.amount = amount
         self.entry_type = entry_type
-        self.notes = notes
+        self.description = description
         self.date = date
         self.currency = currency
         self.tags = tags or []
